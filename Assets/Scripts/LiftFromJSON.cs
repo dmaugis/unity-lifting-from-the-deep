@@ -30,6 +30,7 @@ public class LiftFromJSON : MonoBehaviour {
 	private JSONNode J;
 	private GameObject[] A=new GameObject[16];
         public Vector3 scale=new Vector3(0.01f,0.01f,0.01f);
+        public Transform attach;
 	[TextArea(4, 6)]
 	public string jpos = "";
         
@@ -59,9 +60,11 @@ public class LiftFromJSON : MonoBehaviour {
 		JSONNode x = J [0];
 		JSONNode z = J [1];
 		JSONNode y = J [2];
-
+		Vector3  offset=new Vector3 (x [0] , y [0] , z [0] );
 		for (int k = 0; k < 17; k++) {
-			Vector3 vk = new Vector3 (x [k] * scale[0], y [k] * scale[1], z [k] * scale[2]);
+			Vector3 vk = new Vector3 ((x [k]-offset.x) * scale[0]+attach.position.x, 
+                                                  (y [k]-offset.y) * scale[1]+attach.position.y, 
+                                                  (z [k]-offset.z) * scale[2]+attach.position.z);
                         if (MPII_parts[k]!=null){
                             MPII_parts[k].transform.position=vk;
                         }
@@ -97,7 +100,9 @@ public class LiftFromJSON : MonoBehaviour {
             cv2.line(image, (x0, y0), (x1, y1),_COLORS[lid], LIMB_DRAW_SIZE*_NORMALISATION_FACTOR +1, 16)
 */
 		try{
-                        Gizmos.color =MPII_colors[MPII_limbs[0]];
+                        Gizmos.color =Color.yellow;
+			Gizmos.DrawSphere(MPII_parts[0].transform.position, 0.01f);
+                        Gizmos.color =MPII_colors[MPII_limbs[1]];
 			Gizmos.DrawLine (MPII_parts[0].transform.position, MPII_parts [1].transform.position);
 			Gizmos.DrawLine (MPII_parts [1].transform.position, MPII_parts [2].transform.position);
 			Gizmos.DrawLine (MPII_parts [2].transform.position, MPII_parts [3].transform.position);
