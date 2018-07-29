@@ -33,14 +33,7 @@ public class LiftFromJSON : MonoBehaviour {
         public Transform attach;
 	[TextArea(4, 6)]
 	public string jpos = "";
-        
-        private static string[]    MPII_labels= {"hips", 
-                                            "thigh.L", "shin.L","foot.L",
-                                            "thigh.R","shin.R","foot.R",
-                                            "spine","neck","jaw","head",
-                                            "upperarm.R","forearm.R","hand.R",
-                                            "upperarm_L","forearm_L","handL"
-                                            };
+
         private static Color[]    MPII_colors= {
                     new Color(0, 0, 255), new Color(0, 170, 255),new Color(0, 255, 170),new Color(0, 255, 0),
                     new Color(170, 255, 0), new Color(255, 170, 0),new Color(255, 0, 0),new Color(255, 0, 170),
@@ -48,11 +41,11 @@ public class LiftFromJSON : MonoBehaviour {
                     };
         private static int[]      MPII_limbs = { 0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13 };
         [NamedArrayAttribute (new string[]{ "hips", 
-                                            "thigh.L", "shin.L","foot.L",
                                             "thigh_R","shin_R","foot.R",
+                                            "thigh.L", "shin.L","foot.L",
                                             "spine","neck","jaw","head",
-                                            "upper_arm_R","forearm_R","handR",
-                                            "upper_arm_L","forearm_L","handL"
+                                            "upper_arm_L","forearm_L","handL",
+                                            "upper_arm_R","forearm_R","handR"
                                             })]
         public GameObject[] MPII_parts;
 
@@ -86,19 +79,6 @@ public class LiftFromJSON : MonoBehaviour {
 
 	void OnDrawGizmos(){
 
-/*
-
-    _LIMBS = np.array([ [0, 1], [2, 3], [3, 4], [5, 6], 6, 7, 8, 9,
-                       9, 10, 11, 12, 12, 13]).reshape((-1, 2))
-        for lid, (p0, p1) in enumerate(_LIMBS):
-            if not (visible[oid][p0] and visible[oid][p1]):
-                continue
-            y0, x0 = pose_2d[oid][p0]
-            y1, x1 = pose_2d[oid][p1]
-            cv2.circle(image, (x0, y0), JOINT_DRAW_SIZE *_NORMALISATION_FACTOR +1, _COLORS[lid], -1)
-            cv2.circle(image, (x1, y1), JOINT_DRAW_SIZE*_NORMALISATION_FACTOR +1, _COLORS[lid], -1)
-            cv2.line(image, (x0, y0), (x1, y1),_COLORS[lid], LIMB_DRAW_SIZE*_NORMALISATION_FACTOR +1, 16)
-*/
 		try{
                         Gizmos.color =Color.yellow;
 			Gizmos.DrawSphere(MPII_parts[0].transform.position, 0.01f);
@@ -118,27 +98,7 @@ public class LiftFromJSON : MonoBehaviour {
 			Gizmos.DrawLine (MPII_parts [12].transform.position, MPII_parts[13].transform.position);
 			Gizmos.DrawLine (MPII_parts [8].transform.position, MPII_parts [14].transform.position);
 			Gizmos.DrawLine (MPII_parts [14].transform.position, MPII_parts [15].transform.position);
-			Gizmos.DrawLine (MPII_parts [15].transform.position, MPII_parts [16].transform.position);
-/*
-                        Gizmos.color =MPII_colors[MPII_limbs[0]];
-			Gizmos.DrawLine (MPII_parts[0].transform.position, MPII_parts[1].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[1]];
-			Gizmos.DrawLine (MPII_parts[2].transform.position, MPII_parts[3].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[2]];
-			Gizmos.DrawLine (MPII_parts[3].transform.position, MPII_parts[4].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[3]];
-			Gizmos.DrawLine (MPII_parts[5].transform.position, MPII_parts[6].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[4]];
-			Gizmos.DrawLine (MPII_parts[6].transform.position, MPII_parts[7].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[5]];
-			Gizmos.DrawLine (MPII_parts[8].transform.position, MPII_parts[9].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[6]];
-			Gizmos.DrawLine (MPII_parts[9].transform.position, MPII_parts[10].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[7]];
-			Gizmos.DrawLine (MPII_parts[11].transform.position, MPII_parts[12].transform.position);
-                        //Gizmos.color =MPII_colors[MPII_limbs[8]];
-			Gizmos.DrawLine (MPII_parts[12].transform.position, MPII_parts[13].transform.position);
-  */                      
+			Gizmos.DrawLine (MPII_parts [15].transform.position, MPII_parts [16].transform.position);              
 		}
 		catch (Exception e)
 		{
