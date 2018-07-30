@@ -59,8 +59,14 @@ public class LiftFromJSON : MonoBehaviour {
                                             "upper_arm_R","forearm_R","handR"
                                             })]
         public GameObject[] MPII_parts;
-
+	public GameObject   MPII_looktarget;
         private Vector3[]   MPII_orientation_vectors=new Vector3[3];
+
+        Vector3   BuildLookTarget(){
+		Vector3 v=MPII_parts [9].transform.position-((MPII_parts [8].transform.position*0.6f+MPII_parts[10].transform.position*0.4f));
+                Vector3 w=MPII_parts [9].transform.position+ 2.0f*v;
+                return w;
+        }
 
 	void BuildPosition(JSONNode J){
 		JSONNode x = J [0];
@@ -74,7 +80,6 @@ public class LiftFromJSON : MonoBehaviour {
                 Avatar_orientation_vectors[0]=(Avatar_bones [4].transform.position-Avatar_bones [1].transform.position);
                 // the Z=forward direction is given by cross product
                 Avatar_orientation_vectors[2]=Vector3.Cross(Avatar_orientation_vectors[0],Avatar_orientation_vectors[1]);
-
                 Quaternion   Avatar_Rotation=Quaternion.LookRotation(Avatar_orientation_vectors[2], Avatar_orientation_vectors[1]);
 
 		// MPII 
@@ -97,14 +102,19 @@ public class LiftFromJSON : MonoBehaviour {
 
                 // rotate Avatar to match MPII orientation
                 Quaternion relative =  Avatar_Rotation*MPII_Rotation ;
-Avatar.transform.rotation=relative;
-                //transform.Rotate(Vector3.up * Time.deltaTime, attach.position);
-                //Quaternion Q=LookRotation(Vector3 forward, Vector3 upwards = Vector3.up);
+                Avatar.transform.rotation=relative;
+
+		// now do a hip translation to stay in place
 		for (int k = 0; k < 17; k++) {
                         if (MPII_parts[k]!=null){
                             MPII_parts[k].transform.position=MPII_pos[k]+Avatar_bones[0].transform.position;
                         }
 		}
+
+
+                MPII_looktarget.transform.position=BuildLookTarget();
+
+
 	}
 
 	// Use this for initialization
@@ -149,12 +159,22 @@ Avatar.transform.rotation=relative;
                         Gizmos.color =Color.yellow;
                         Gizmos.DrawLine (MPII_parts [0].transform.position, MPII_parts [0].transform.position+MPII_orientation_vectors[2]);
 */
+/*
+                        Gizmos.color =Color.green;
+                        Gizmos.DrawLine (MPII_parts [8].transform.position, MPII_parts [10].transform.position);
+                        Gizmos.color =Color.yellow;
+			Gizmos.DrawLine ((MPII_parts [8].transform.position+ MPII_parts [10].transform.position)/2.0f,MPII_parts [9].transform.position);
+*/
+Gizmos.color =Color.yellow;
+Gizmos.DrawLine (BuildLookTarget(), MPII_parts [9].transform.position);
+/*
                         Gizmos.color =Color.green;
                         Gizmos.DrawLine (Avatar_bones [0].transform.position, Avatar_bones [0].transform.position+Avatar_orientation_vectors[1]);
                         Gizmos.color =Color.red;
                         Gizmos.DrawLine (Avatar_bones [0].transform.position, Avatar_bones [0].transform.position+Avatar_orientation_vectors[0]);
                         Gizmos.color =Color.yellow;
                         Gizmos.DrawLine (Avatar_bones [0].transform.position, Avatar_bones [0].transform.position+Avatar_orientation_vectors[2]);
+*/
 		}
 		catch (Exception e)
 		{
