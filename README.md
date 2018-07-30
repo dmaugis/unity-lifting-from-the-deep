@@ -16,10 +16,7 @@ Let say you get an image from [TJStock](https://www.deviantart.com/tjstock/) on 
 ![photo demon_goddess_12 from TJStock on DeviantArt](https://raw.githubusercontent.com/dmaugis/unity-lifting-from-the-deep/master/doc/demon_goddess_12___drawing_pose_reference_by_tjstock-d86cuaq-reduced.jpg "my source photo, demon_goddess_12 / TJStock / DeviantArt")
 
 
-NB: If you reuse this photograph, please see the license: 
-
-
-!!! https://www.deviantart.com/tjstock/journal/Rules-and-Licensing-Agreements-395041532 !!!
+NB: If you reuse this photograph, please respect the [license](https://www.deviantart.com/tjstock/journal/Rules-and-Licensing-Agreements-395041532)
 
 Then, using [docker-lifting-from-the-deep](https://github.com/dmaugis/docker-lifting-from-the-deep) you will get the JSON corresponding to the pose as an MPII skeleton (http://human-pose.mpi-inf.mpg.de/):
 ```json
